@@ -17,7 +17,6 @@ public class RepositoryEmployee {
     @Inject
     AgroalDataSource agr;
 
-
     public Connection getConnection(){
         Connection connection = null;
         try {
@@ -31,6 +30,30 @@ public class RepositoryEmployee {
         return connection;
     }
 
+    public Student getStudentById(int id){
+        System.out.println("id"+id);
+        String sql = "select * from student where id=?";
+        Student student = null;
+        try {
+            PreparedStatement statement = getConnection().prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+
+            // int id, String name, int age, String gender, String address
+            System.out.println("result"+result);
+            student = new Student();
+            while (result.next()) {
+                student.setId(result.getInt(1));
+                student.setName(result.getString(2));
+                student.setEmail(result.getString(3));
+            }
+        } catch (Exception ae) {
+            ae.printStackTrace();
+        }
+        return student;
+    }
+
+
     public ArrayList<Student> getAllStudent(){
         ArrayList<Student> studentsList = new ArrayList<>();
         String sql = "select * from student";
@@ -38,7 +61,7 @@ public class RepositoryEmployee {
             PreparedStatement statement = getConnection().prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()){
-                studentsList.add(new Student(resultSet.getString(1), resultSet.getString(2)));
+                studentsList.add(new Student(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3)));
             }
         }catch (Exception e){
             e.printStackTrace();

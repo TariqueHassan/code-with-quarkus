@@ -4,9 +4,11 @@ public class Student {
     int id;
     String name;
     String email;
+    public Student(){
 
-    public Student( String name, String email) {
-        //this.id = id;
+    }
+    public Student(int id, String name, String email) {
+        this.id = id;
         this.name = name;
         this.email = email;
     }

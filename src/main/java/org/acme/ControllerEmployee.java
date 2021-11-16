@@ -8,6 +8,8 @@ import javax.ws.rs.core.Response;
 
 @Path("/hello")
 public class ControllerEmployee {
+    @Inject
+    RepositoryEmployee rep;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -15,8 +17,7 @@ public class ControllerEmployee {
         return "Hello RESTEasy";
     }
 
-    @Inject
-    RepositoryEmployee rep;
+
 
     @Path("/con")
     @GET
@@ -28,8 +29,15 @@ public class ControllerEmployee {
     @GET
     @Path("/AllStudents")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPerson(){
+    public Response getAllStudent(){
         return Response.ok(rep.getAllStudent()).build();
+    }
+
+    @GET
+    @Path("/get-student-by-id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getStudentById(@PathParam("id") Integer id){
+        return Response.ok(rep.getStudentById(id)).build();
     }
 
     @POST
