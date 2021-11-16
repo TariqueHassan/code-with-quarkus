@@ -40,6 +40,23 @@ public class ControllerEmployee {
         return Response.ok(rep.getStudentById(id)).build();
     }
 
+    @PUT
+    @Path("/update-student/{id}/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateStudent(@PathParam("id") int id, @PathParam("email") String email){
+        rep.updateStudent(id, email);
+        return Response.ok(rep.getStudentById(id)).build();
+    }
+
+    @DELETE
+    @Path("/delete-student/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteStudent(@PathParam("id") int id){
+        rep.deleteStudent(id);
+        return Response.ok(rep.getStudentById(id)).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

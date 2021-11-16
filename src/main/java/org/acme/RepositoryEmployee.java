@@ -5,10 +5,7 @@ import io.agroal.api.AgroalDataSource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 
 @ApplicationScoped
@@ -68,6 +65,31 @@ public class RepositoryEmployee {
         }
 
         return studentsList;
+    }
+
+    public void updateStudent(int id, String email){
+
+        String sql = "Update student set email=? where id=?";
+        try {
+            PreparedStatement statement = getConnection().prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            System.out.println("id: "+id+"  email: "+email);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteStudent(int id){
+        String sql = "Delete from student where id=?";
+        try {
+            PreparedStatement statement = getConnection().prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public void setStudent(Student student){
